@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Bannisa 💖 | Our Universe</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ice: '#E2E8F0',
+                        aubergine: '#1A0B2E',
+                        marigold: '#F59E0B',
+                        lavender: '#C4B5FD',
+                        deepAubergine: '#0F051D',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-deepAubergine text-ice font-sans min-h-screen overflow-x-hidden selection:bg-marigold selection:text-aubergine">
+
+    <!-- Ambient Starfield Canvas -->
+    <canvas id="starfield" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Floating Audio & Theme Player Widget -->
+    <div id="audio-widget" class="fixed top-4 right-4 z-50 flex items-center gap-3 bg-aubergine/80 backdrop-blur-md border border-lavender/20 px-4 py-2 rounded-full shadow-2xl transition-all duration-300">
+        <button id="music-toggle" class="flex items-center gap-2 text-lavender hover:text-marigold transition text-sm font-medium">
+            <svg id="music-icon" class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+            <span id="music-text">Play Melody</span>
+        </button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.4" class="w-16 accent-marigold cursor-pointer">
+    </div>
+
+    <!-- Anya Companion Floating Widget -->
+    <div id="anya-companion" class="fixed bottom-6 right-6 z-45 flex flex-col items-end cursor-pointer group transition-transform hover:scale-105">
+        <div id="anya-speech" class="bg-aubergine/90 border border-lavender/30 text-xs px-3 py-1.5 rounded-xl mb-2 shadow-lg backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            Waku Waku! Happy Birthday Bannisa! ✨
+        </div>
+        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-marigold to-lavender p-0.5 shadow-2xl flex items-center justify-center overflow-hidden">
+            <div id="anya-avatar" class="w-full h-full bg-aubergine rounded-full flex items-center justify-center overflow-hidden">
+                <svg viewBox="0 0 100 100" class="w-12 h-12">
+                    <circle cx="50" cy="50" r="45" fill="#FDE68A"/>
+                    <ellipse cx="35" cy="45" rx="6" ry="8" fill="#1A0B2E"/>
+                    <ellipse cx="65" cy="45" rx="6" ry="8" fill="#1A0B2E"/>
+                    <circle cx="33" cy="43" r="2" fill="#FFFFFF"/>
+                    <circle cx="63" cy="43" r="2" fill="#FFFFFF"/>
+                    <path d="M 40 60 Q 50 70 60 60" stroke="#1A0B2E" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <path d="M 25 35 Q 20 20 35 25" stroke="#F59E0B" stroke-width="4" fill="none"/>
+                    <path d="M 75 35 Q 80 20 65 25" stroke="#F59E0B" stroke-width="4" fill="none"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. PASSWORD-PROTECTED ENTRANCE SCREEN -->
+    <div id="entrance-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-deepAubergine/95 backdrop-blur-xl px-4 transition-opacity duration-700">
+        <div class="max-w-md w-full bg-aubergine/60 border border-lavender/20 rounded-3xl p-8 shadow-2xl backdrop-blur-xl text-center relative overflow-hidden group">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-marigold/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-lavender/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-tr from-marigold/20 to-lavender/20 rounded-2xl flex items-center justify-center border border-lavender/30 shadow-inner animate-bounce">
+                <svg class="w-10 h-10 text-marigold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+            </div>
+
+            <h1 class="font-serif text-3xl font-bold mb-2 text-ice tracking-wide">For Bannisa</h1>
+            <p class="text-lavender/80 text-sm mb-6 font-light">A secret universe awaits you. Enter the password to unlock our 2-year journey.</p>
+
+            <form id="password-form" class="space-y-4">
+                <div class="relative">
+                    <input type="password" id="password-input" placeholder="Enter secret password..." class="w-full bg-deepAubergine/80 border border-lavender/30 rounded-xl px-4 py-3 text-ice placeholder-lavender/40 text-center focus:outline-none focus:border-marigold transition text-lg tracking-wider">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold py-3 rounded-xl shadow-lg hover:opacity-95 transition transform active:scale-95">
+                    Unlock Our Universe ✨
+                </button>
+            </form>
+            <p id="error-msg" class="text-rose-400 text-xs mt-3 opacity-0 transition-opacity">Incorrect password. Default is "aurora" (check script.js to change).</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="main-app" class="hidden opacity-0 transition-opacity duration-1000 relative z-10">
+        
+        <!-- Navigation / Progress Header -->
+        <header class="sticky top-0 z-40 bg-aubergine/80 backdrop-blur-md border-b border-lavender/10 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="w-3 h-3 rounded-full bg-marigold animate-ping"></span>
+                <h2 class="font-serif text-xl font-bold tracking-wide text-ice">Bannisa's 2nd Anniversary Universe</h2>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <span id="progress-text" class="text-xs text-lavender/70 font-medium">Chapter 1 of 9</span>
+                <div class="w-36 h-2 bg-deepAubergine rounded-full overflow-hidden border border-lavender/20">
+                    <div id="progress-bar" class="w-[11%] h-full bg-gradient-to-r from-marigold to-lavender transition-all duration-500"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-5xl mx-auto px-4 py-12 space-y-24">
+
+            <!-- CHAPTER 1: The Secret Beginning -->
+            <section id="chapter-1" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-2xl bg-aubergine/40 backdrop-blur-xl border border-lavender/20 rounded-3xl p-10 shadow-2xl relative">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter I — The Secret Beginning</span>
+                    <h1 class="font-serif text-4xl sm:text-5xl font-bold mb-6 text-ice leading-tight">Happy Birthday, Bannisa ❤️</h1>
+                    <p class="text-lavender/90 text-lg font-light leading-relaxed mb-8">
+                        Two magnificent years of laughter, dreams, quiet moments, and endless love have led us to this exact day. I wanted to build something as extraordinary as you are—a digital universe made entirely for us.
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3.5 rounded-full shadow-lg hover:scale-105 transition transform">
+                            Enter My Little Universe 🌌
+                        </button>
+                        <button onclick="triggerAnyaReaction('excited')" class="bg-lavender/10 hover:bg-lavender/20 border border-lavender/30 text-lavender font-medium px-6 py-3.5 rounded-full transition">
+                            Anya's Greeting 🌸
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 2: Choose Your Universe -->
+            <section id="chapter-2" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-3xl w-full">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter II — Choose Your Universe</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-4 text-ice">Select Your Atmospheric Mood</h2>
+                    <p class="text-lavender/80 mb-10 max-w-xl mx-auto font-light">Each mood transforms the entire lighting and aura of this experience. Pick what matches your heart right now.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div onclick="setTheme('golden')" class="theme-card bg-aubergine/60 border-2 border-marigold/40 hover:border-marigold rounded-2xl p-6 cursor-pointer transition transform hover:-translate-y-2 shadow-xl group">
+                            <div class="w-12 h-12 rounded-xl bg-marigold/20 flex items-center justify-center mx-auto mb-4 text-marigold group-hover:scale-110 transition">✨</div>
+                            <h3 class="font-serif text-xl font-bold mb-2 text-ice">Golden Hour</h3>
+                            <p class="text-xs text-lavender/70">Warm amber tones, glowing sunlight, and cozy timeless warmth.</p>
+                        </div>
+                        <div onclick="setTheme('rose')" class="theme-card bg-aubergine/60 border-2 border-rose-400/40 hover:border-rose-400 rounded-2xl p-6 cursor-pointer transition transform hover:-translate-y-2 shadow-xl group">
+                            <div class="w-12 h-12 rounded-xl bg-rose-400/20 flex items-center justify-center mx-auto mb-4 text-rose-300 group-hover:scale-110 transition">🌹</div>
+                            <h3 class="font-serif text-xl font-bold mb-2 text-ice">Rose Dusk</h3>
+                            <p class="text-xs text-lavender/70">Soft lavender, gentle romance, and evening twilight hues.</p>
+                        </div>
+                        <div onclick="setTheme('silver')" class="theme-card bg-aubergine/60 border-2 border-ice/40 hover:border-ice rounded-2xl p-6 cursor-pointer transition transform hover:-translate-y-2 shadow-xl group">
+                            <div class="w-12 h-12 rounded-xl bg-ice/20 flex items-center justify-center mx-auto mb-4 text-ice group-hover:scale-110 transition">❄️</div>
+                            <h3 class="font-serif text-xl font-bold mb-2 text-ice">Moonlit Silver</h3>
+                            <p class="text-xs text-lavender/70">Ice silver starlight, quiet elegance, and dreamy serenity.</p>
+                        </div>
+                    </div>
+                    <div class="mt-10">
+                        <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                            Continue Journey ➔
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 3: Three Mystery Parcels -->
+            <section id="chapter-3" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-3xl w-full">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter III — Three Mystery Parcels</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-4 text-ice">Choose a Mystery Gift Box</h2>
+                    <p class="text-lavender/80 mb-10 font-light">Each parcel holds a unique surprise waiting just for you. Click to open them all!</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+                        <div onclick="openParcel(1)" id="parcel-1" class="parcel-box bg-aubergine/60 border border-lavender/30 hover:border-marigold rounded-2xl p-8 cursor-pointer transition transform hover:scale-105 shadow-xl relative">
+                            <div class="text-4xl mb-3">🎁</div>
+                            <h3 class="font-serif text-lg font-bold text-ice mb-1">Parcel I</h3>
+                            <p id="parcel-text-1" class="text-xs text-lavender/70">Click to unwrap secret</p>
+                        </div>
+                        <div onclick="openParcel(2)" id="parcel-2" class="parcel-box bg-aubergine/60 border border-lavender/30 hover:border-marigold rounded-2xl p-8 cursor-pointer transition transform hover:scale-105 shadow-xl relative">
+                            <div class="text-4xl mb-3">💌</div>
+                            <h3 class="font-serif text-lg font-bold text-ice mb-1">Parcel II</h3>
+                            <p id="parcel-text-2" class="text-xs text-lavender/70">Click to unwrap secret</p>
+                        </div>
+                        <div onclick="openParcel(3)" id="parcel-3" class="parcel-box bg-aubergine/60 border border-lavender/30 hover:border-marigold rounded-2xl p-8 cursor-pointer transition transform hover:scale-105 shadow-xl relative">
+                            <div class="text-4xl mb-3">✨</div>
+                            <h3 class="font-serif text-lg font-bold text-ice mb-1">Parcel III</h3>
+                            <p id="parcel-text-3" class="text-xs text-lavender/70">Click to unwrap secret</p>
+                        </div>
+                    </div>
+                    <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                        Continue to Our Story ➔
+                    </button>
+                </div>
+            </section>
+
+            <!-- CHAPTER 4: Two Years, One Beautiful Story -->
+            <section id="chapter-4" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-4xl w-full">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter IV — Two Years, One Beautiful Story</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-4 text-ice">Our Scrapbook of Memories</h2>
+                    <p class="text-lavender/80 mb-10 font-light">Reflecting on the chapters of our 2-year journey together.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-left">
+                        <div class="bg-aubergine/60 border border-lavender/20 rounded-2xl p-6 shadow-xl relative group hover:border-marigold/50 transition">
+                            <div class="text-marigold font-serif text-sm font-bold mb-2">Year 1 • The Spark</div>
+                            <h3 class="font-serif text-xl font-bold mb-3 text-ice">The Beginning of Everything</h3>
+                            <p class="text-lavender/80 text-sm font-light leading-relaxed">
+                                When our paths first crossed, neither of us knew how deeply our lives would intertwine. Every conversation felt like discovering a rare, beautiful melody.
+                            </p>
+                        </div>
+                        <div class="bg-aubergine/60 border border-lavender/20 rounded-2xl p-6 shadow-xl relative group hover:border-marigold/50 transition">
+                            <div class="text-marigold font-serif text-sm font-bold mb-2">Everyday Magic • Growth</div>
+                            <h3 class="font-serif text-xl font-bold mb-3 text-ice">Finding Comfort in Each Other</h3>
+                            <p class="text-lavender/80 text-sm font-light leading-relaxed">
+                                Through quiet evenings, shared laughter, and supporting one another through life's challenges, our bond grew into something unshakable and profound.
+                            </p>
+                        </div>
+                        <div class="bg-aubergine/60 border border-lavender/20 rounded-2xl p-6 shadow-xl relative group hover:border-marigold/50 transition">
+                            <div class="text-marigold font-serif text-sm font-bold mb-2">Year 2 • Today & Forever</div>
+                            <h3 class="font-serif text-xl font-bold mb-3 text-ice">Two Years Strong</h3>
+                            <p class="text-lavender/80 text-sm font-light leading-relaxed">
+                                Standing here today, celebrating your birthday for the second time as my partner, my heart overflows with gratitude for every single moment with you.
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                        Visit Wish Wall ➔
+                    </button>
+                </div>
+            </section>
+
+            <!-- CHAPTER 5: A Wall of Wishes -->
+            <section id="chapter-5" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-3xl w-full">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter V — A Wall of Wishes</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-4 text-ice">The Wishing Wall</h2>
+                    <p class="text-lavender/80 mb-8 font-light">Click on the floating stars and hearts to reveal birthday wishes dedicated to you.</p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+                        <div onclick="revealWish(1)" class="wish-card bg-aubergine/50 border border-lavender/20 rounded-2xl p-6 cursor-pointer hover:border-marigold transition">
+                            <span class="text-2xl mb-2 block">⭐</span>
+                            <p id="wish-1" class="text-xs text-lavender/80 font-light">Click to read wish #1</p>
+                        </div>
+                        <div onclick="revealWish(2)" class="wish-card bg-aubergine/50 border border-lavender/20 rounded-2xl p-6 cursor-pointer hover:border-marigold transition">
+                            <span class="text-2xl mb-2 block">💖</span>
+                            <p id="wish-2" class="text-xs text-lavender/80 font-light">Click to read wish #2</p>
+                        </div>
+                        <div onclick="revealWish(3)" class="wish-card bg-aubergine/50 border border-lavender/20 rounded-2xl p-6 cursor-pointer hover:border-marigold transition">
+                            <span class="text-2xl mb-2 block">✨</span>
+                            <p id="wish-3" class="text-xs text-lavender/80 font-light">Click to read wish #3</p>
+                        </div>
+                    </div>
+                    <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                        Open Secret Gift ➔
+                    </button>
+                </div>
+            </section>
+
+            <!-- CHAPTER 6: The Secret Gift -->
+            <section id="chapter-6" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-2xl w-full bg-aubergine/50 backdrop-blur-xl border border-lavender/20 rounded-3xl p-10 shadow-2xl">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter VI — The Secret Gift</span>
+                    <h2 class="font-serif text-3xl font-bold mb-4 text-ice">A Special Surprise Box</h2>
+                    <p class="text-lavender/80 mb-8 font-light">Unwrap this grand box to reveal a magical birthday celebration message.</p>
+                    
+                    <div id="grand-gift" onclick="openGrandGift()" class="w-36 h-36 mx-auto bg-gradient-to-tr from-marigold to-amber-600 rounded-3xl shadow-2xl flex items-center justify-center cursor-pointer transform hover:scale-105 transition relative group">
+                        <div class="absolute inset-x-0 top-1/2 h-6 bg-rose-500/80 -translate-y-1/2"></div>
+                        <div class="absolute inset-y-0 left-1/2 w-6 bg-rose-500/80 -translate-x-1/2"></div>
+                        <span id="gift-icon" class="text-5xl relative z-10 group-hover:scale-125 transition">🎁</span>
+                    </div>
+                    <div id="grand-gift-message" class="hidden mt-6 text-lavender text-sm font-light leading-relaxed p-4 bg-deepAubergine/60 rounded-xl border border-lavender/20">
+                        🎉 Surprise! You are the absolute best thing that has ever happened in my life, Bannisa. May this year bring you limitless joy and success!
+                    </div>
+
+                    <div class="mt-8">
+                        <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                            Read My Letter ➔
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 7: The Letter I Couldn't Say Out Loud -->
+            <section id="chapter-7" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-3xl w-full bg-aubergine/60 backdrop-blur-xl border border-lavender/30 rounded-3xl p-8 sm:p-12 shadow-2xl text-left relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 text-marigold/20 text-7xl font-serif pointer-events-none">“</div>
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter VII — The Letter I Couldn't Say Out Loud</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-6 text-ice">To My Dearest Bannisa,</h2>
+                    
+                    <div class="space-y-4 text-lavender/90 font-light text-base leading-relaxed max-h-[450px] overflow-y-auto pr-4 custom-scrollbar">
+                        <p>
+                            As I sit down to write this on the eve of your birthday, I find myself reflecting on the incredible journey we have shared over the past two years. Words often feel too small to capture the depth of what you mean to me, but I wanted to pour my heart onto these digital pages so you always know how deeply loved you are.
+                        </p>
+                        <p>
+                            From the very beginning, when our paths first crossed, you brought a warmth and brightness into my world that I never knew existed. Even ordinary moments—a quiet walk, a shared cup of coffee, or just sitting together in comfortable silence—turn into something sacred and unforgettable simply because you are there.
+                        </p>
+                        <p>
+                            I adore everything about your presence: your radiant smile, your gentle kindness, the way your mind works, and the grace with which you navigate life. You have a rare gift for making everyone around you feel valued and cherished, and I count my lucky stars every single day that I get to call you mine.
+                        </p>
+                        <p>
+                            Relationships are never entirely without their bumps, but choosing each other through every season is what makes our bond so meaningful. Thank you for your endless patience, your unwavering love, and for standing by my side through every high and low. You make me want to be a better person, a more attentive partner, and a dreamer who believes in a beautiful future.
+                        </p>
+                        <p>
+                            Today, on November 5, I celebrate not just the day you were born, but the day the universe gifted me my favorite person. You are irreplaceable, breathtakingly beautiful, and deeply loved beyond measure. Here is to celebrating this birthday, and countless more birthdays, memories, and adventures together for the rest of our lives.
+                        </p>
+                        <p class="font-serif text-marigold pt-4 text-lg">
+                            With all my love and devotion,<br>
+                            Yours always. ❤️
+                        </p>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <button onclick="nextChapter()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                            Make a Birthday Wish ➔
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 8: Make a Birthday Wish -->
+            <section id="chapter-8" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-2xl w-full bg-aubergine/50 backdrop-blur-xl border border-lavender/20 rounded-3xl p-10 shadow-2xl">
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter VIII — Make a Birthday Wish</span>
+                    <h2 class="font-serif text-3xl font-bold mb-4 text-ice">Blow Out the Candles</h2>
+                    <p class="text-lavender/80 mb-8 font-light">Make a heartfelt wish, then click the candles to blow them out!</p>
+                    
+                    <!-- Birthday Cake Illustration -->
+                    <div class="relative w-64 h-48 mx-auto mb-8 flex flex-col items-center justify-end">
+                        <div class="flex gap-6 mb-2">
+                            <div class="flex flex-col items-center">
+                                <div id="flame-1" class="w-3 h-5 bg-amber-400 rounded-full animate-bounce shadow-lg shadow-amber-400 cursor-pointer" onclick="extinguishCandle(1)"></div>
+                                <div class="w-2 h-10 bg-lavender/80 rounded-t-sm"></div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div id="flame-2" class="w-3 h-5 bg-amber-400 rounded-full animate-bounce shadow-lg shadow-amber-400 cursor-pointer" onclick="extinguishCandle(2)"></div>
+                                <div class="w-2 h-10 bg-lavender/80 rounded-t-sm"></div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div id="flame-3" class="w-3 h-5 bg-amber-400 rounded-full animate-bounce shadow-lg shadow-amber-400 cursor-pointer" onclick="extinguishCandle(3)"></div>
+                                <div class="w-2 h-10 bg-lavender/80 rounded-t-sm"></div>
+                            </div>
+                        </div>
+                        <div class="w-48 h-16 bg-gradient-to-r from-rose-400 to-pink-500 rounded-t-2xl shadow-xl border-t border-lavender/40"></div>
+                        <div class="w-60 h-20 bg-gradient-to-r from-aubergine to-purple-900 rounded-t-3xl shadow-2xl border-t border-lavender/30"></div>
+                    </div>
+
+                    <button onclick="extinguishAllCandles()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition mb-4">
+                        Blow Out All Candles 🕯️✨
+                    </button>
+                    <p id="cake-wish-msg" class="text-marigold text-sm font-medium opacity-0 transition-opacity">Your wish has been whispered to the stars. May it come true!</p>
+
+                    <div class="mt-6">
+                        <button onclick="nextChapter()" class="bg-lavender/10 hover:bg-lavender/20 text-lavender font-medium px-6 py-2.5 rounded-full transition text-sm">
+                            Final Celebration ➔
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 9: The Final Surprise -->
+            <section id="chapter-9" class="chapter-section min-h-[80vh] flex flex-col items-center justify-center text-center">
+                <div class="max-w-3xl w-full bg-aubergine/60 backdrop-blur-xl border border-lavender/30 rounded-3xl p-10 shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-marigold/10 via-lavender/10 to-transparent pointer-events-none"></div>
+                    <span class="text-marigold uppercase tracking-widest text-xs font-semibold mb-3 block">Chapter IX — The Final Celebration</span>
+                    <h1 class="font-serif text-4xl sm:text-5xl font-bold mb-4 text-ice">Happy Birthday, Bannisa! 💖</h1>
+                    <p class="text-lavender/90 text-lg font-light mb-8 max-w-xl mx-auto">
+                        Thank you for exploring this little universe made with all my love. Here is to our two amazing years and all the beautiful tomorrows waiting for us.
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <button onclick="restartExperience()" class="bg-gradient-to-r from-marigold to-amber-500 text-aubergine font-semibold px-8 py-3.5 rounded-full shadow-lg hover:scale-105 transition">
+                            Replay Experience 🔄
+                        </button>
+                        <button onclick="triggerAnyaReaction('celebrate')" class="bg-lavender/10 hover:bg-lavender/20 border border-lavender/30 text-lavender font-medium px-6 py-3.5 rounded-full transition">
+                            Celebrate with Anya 🎉
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center py-8 text-xs text-lavender/40 border-t border-lavender/10 mt-20">
+            Made with infinite love for Bannisa on November 5th • 2 Years Together ❤️
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>

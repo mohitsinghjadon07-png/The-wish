@@ -1,0 +1,283 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+/* ================================
+   GLOBAL THEME VARIABLES
+================================ */
+
+:root {
+    --bg-color: #0F051D;
+    --surface-color: #1A0B2E;
+    --primary: #F59E0B;
+    --lavender: #C4B5FD;
+    --text-color: #E2E8F0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* GOLDEN THEME */
+
+body.theme-golden {
+    --bg-color: #1A0D08;
+    --surface-color: #2B170D;
+    --primary: #F59E0B;
+    --lavender: #FDE68A;
+}
+
+/* ROSE THEME */
+
+body.theme-rose {
+    --bg-color: #1F0D1A;
+    --surface-color: #321426;
+    --primary: #FB7185;
+    --lavender: #FBCFE8;
+}
+
+/* SILVER THEME */
+
+body.theme-silver {
+    --bg-color: #0B0F19;
+    --surface-color: #151D2C;
+    --primary: #38BDF8;
+    --lavender: #E2E8F0;
+}
+
+/* ================================
+   GENERAL STYLING
+================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+button {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+}
+
+::selection {
+    background: var(--primary);
+    color: #1A0B2E;
+}
+
+/* ================================
+   THEME COLOR OVERRIDES
+================================ */
+
+body.theme-golden,
+body.theme-rose,
+body.theme-silver {
+    background-color: var(--bg-color) !important;
+}
+
+body.theme-golden .text-marigold,
+body.theme-rose .text-marigold,
+body.theme-silver .text-marigold {
+    color: var(--primary) !important;
+}
+
+body.theme-golden .text-lavender,
+body.theme-rose .text-lavender,
+body.theme-silver .text-lavender {
+    color: var(--lavender) !important;
+}
+
+body.theme-golden .border-marigold,
+body.theme-rose .border-marigold,
+body.theme-silver .border-marigold {
+    border-color: var(--primary) !important;
+}
+
+/* ================================
+   CUSTOM SCROLLBAR
+================================ */
+
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(196, 181, 253, 0.45) rgba(26, 11, 46, 0.4);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(26, 11, 46, 0.4);
+    border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(196, 181, 253, 0.3);
+    border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(245, 158, 11, 0.5);
+}
+
+/* ================================
+   STARFIELD
+================================ */
+
+#starfield {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.75;
+}
+
+/* ================================
+   AUDIO WIDGET
+================================ */
+
+#audio-widget {
+    max-width: calc(100vw - 2rem);
+    transition: all 0.3s ease;
+    z-index: 50;
+}
+
+/* ================================
+   ANYA COMPANION
+================================ */
+
+#anya-companion {
+    z-index: 45;
+}
+
+#anya-speech {
+    max-width: 220px;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+/* ================================
+   CHAPTER ANIMATIONS
+================================ */
+
+.chapter-section {
+    animation: chapterIn 0.55s ease both;
+}
+
+@keyframes chapterIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================
+   INTERACTIVE CARDS
+================================ */
+
+.theme-card,
+.parcel-box,
+.wish-card {
+    backdrop-filter: blur(12px);
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.theme-card:hover,
+.parcel-box:hover,
+.wish-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.parcel-box p,
+.wish-card p {
+    overflow-wrap: anywhere;
+}
+
+/* ================================
+   PASSWORD ERROR SHAKE
+================================ */
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    75% {
+        transform: translateX(6px);
+    }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
+
+@media (max-width: 640px) {
+
+    #audio-widget {
+        top: 10px;
+        right: 10px;
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    #audio-widget button {
+        font-size: 11px;
+    }
+
+    #volume-slider {
+        width: 48px;
+    }
+
+    main {
+        padding-top: 2rem !important;
+    }
+
+    .chapter-section {
+        min-height: 75vh;
+    }
+
+    .chapter-section > div {
+        max-width: 100%;
+    }
+}
+
+/* ================================
+   REDUCED MOTION ACCESSIBILITY
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
